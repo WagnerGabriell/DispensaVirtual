@@ -14,9 +14,19 @@ const deleteUser = async (req,res)=>{
     await userModel.deleteUser(id)
     return res.status(204).json();
 };
+const registerUser = async(req,res)=>{
+    const newUser = await userModel.findEmail(req.body);
+    if(newUser.length > 0){
+        return res.status(400).json({message:"Usuario Existente"});
+    }else if(newUser.length == 0){
+        const User = await userModel.createUser(req.body);    
+        return res.status(201).json(User);
+    }
+};
 
 module.exports = {
     getAll,
     createUser,
     deleteUser,
+    registerUser,
 };
