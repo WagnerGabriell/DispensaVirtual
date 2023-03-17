@@ -1,5 +1,6 @@
 const express = require("express");
 const route = require("./routes.js");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const app = express();

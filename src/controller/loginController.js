@@ -1,7 +1,9 @@
 const userModel = require("../model/userModel");
+const jwt = require("jsonwebtoken");
 
 const authentication = async(req, res)=>{
     const query = await userModel.findUser(req.body);
+    
     if(query.length > 0){
         return res.status(200).json({message:"User found", query:query});
     }else if(query.length == 0){
