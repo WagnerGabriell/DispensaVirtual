@@ -14,12 +14,12 @@ const deleteUser = async (user) =>{
     return delUser;
 };
 const findUser = async (user) => {
-    const { email, senha} = user;
+    const {email, senha} = user;
     const query = await knex("users").select().where({email:email,senha:senha});
     return query;
 };
 const findEmail = async (user) => {
-    const { email} = user;
+    const {email} = user;
     const query = await knex("users").select().where({email:email});
     return query;
 };
