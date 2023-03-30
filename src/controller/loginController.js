@@ -5,6 +5,7 @@ require("dotenv").config();
 function generateToken(id){
     return jwt.sign({id},process.env.SECRET,{expiresIn: 86400});
 };
+
 const registerUser = async(req,res) => {
     const query = await userModel.findEmail(req.body);
     if(query.length > 0){

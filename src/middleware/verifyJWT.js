@@ -9,7 +9,7 @@ const authmid = (req,res,next) =>{
 
     jwt.verify(token, process.env.SECRET,(err, decoded) =>{
         if(err)
-            return res.status(401).json({emssage: "token invalid"});
+            return res.status(401).json({message: "token invalid"});
         req.id = decoded.id;
         return next();
     })

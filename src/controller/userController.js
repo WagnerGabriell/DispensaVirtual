@@ -3,7 +3,7 @@ const { param } = require("../routes");
 
 const getAll = async (req, res) => {
     const users = await userModel.getAll();
-    return res.status(200).json(users);
+    return res.status(200).json({users:users, id:req.id});
 };
 const createUser = async (req,res) => {
     const newUser = await userModel.createUser(req.body);    
