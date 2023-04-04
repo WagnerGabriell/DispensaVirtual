@@ -9,7 +9,7 @@ const routes = express.Router();
 
 routes.get("/", (req,res) =>{res.send("Hello World"); });
 
-routes.get("/users",verifyJWT.authmid, usersController.getAll);
+routes.get("/users", usersController.getAll);
 
 routes.post("/users/create", usersController.createUser);
 
