@@ -1,8 +1,10 @@
 const express = require("express");
 const usersController = require("./controller/userController");
 const loginController = require("./controller/loginController");
-const verifyJWT = require("../src/middleware/verifyJWT");
 const localController = require("./controller/localController");
+const categoriasController = require("./controller/categoriasController");
+const verifyJWT = require("../src/middleware/verifyJWT");
+
 
 
 const routes = express.Router();
@@ -35,5 +37,15 @@ routes.put("/local/update/name/:id", verifyJWT.authmid, localController.updatelo
 routes.put("/local/update/status/:id", verifyJWT.authmid, localController.updatelocalstatus);
 
 routes.delete("/local/delete/:id", verifyJWT.authmid, localController.deletelocal);
+
+//Rotas categorias
+
+// routes.get("/categorias", categoriasController.getAllCategorias);
+
+routes.get("/categorias", verifyJWT.authmid, categoriasController.getCategoriasPerUser);
+
+routes.post("/categorias/create", verifyJWT.authmid, categoriasController.createCategorias);
+
+routes.put("/categorias/update/name/:id", verifyJWT.authmid, categoriasController.updateCategoriasName);
 
 module.exports = routes;
