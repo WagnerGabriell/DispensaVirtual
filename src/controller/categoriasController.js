@@ -22,9 +22,16 @@ const updateCategoriasName = async (req, res) => {
     return res.status(200).json(upCategoria);
 };
 
+const deleteCategoria = async (req, res) => {
+    const { id } = req.params;
+    await categoriasModel.deleteCategoria(id);
+    return res.status(200).json();
+};
+
 module.exports = {
     getAllCategorias,
     createCategorias,
     getCategoriasPerUser,
     updateCategoriasName,
+    deleteCategoria,
 }

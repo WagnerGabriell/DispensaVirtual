@@ -48,4 +48,6 @@ routes.post("/categorias/create", verifyJWT.authmid, categoriasController.create
 
 routes.put("/categorias/update/name/:id", verifyJWT.authmid, categoriasController.updateCategoriasName);
 
+routes.delete("/categorias/delete/:id", verifyJWT.authmid, categoriasController.deleteCategoria);
+
 module.exports = routes;

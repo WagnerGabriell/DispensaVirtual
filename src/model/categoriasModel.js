@@ -21,10 +21,15 @@ const updateCategoriasName = async (categoria, id_categorias) => {
     const upCategoria = await knex("categorias").where({id:id_categorias}).update({nome:nome});
     return upCategoria;
 };
+const deleteCategoria = async (categoria) =>{
+    const delCategoria = await knex("categorias").where({id:categoria}).del();
+    return delCategoria;
+}; 
 
 module.exports = {
     getAllCategorias,
     createCategorias,
     getCategoriasPerUser,
     updateCategoriasName,
+    deleteCategoria,
 }
