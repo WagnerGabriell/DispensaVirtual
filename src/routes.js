@@ -3,7 +3,8 @@ const usersController = require("./controller/userController");
 const loginController = require("./controller/loginController");
 const localController = require("./controller/localController");
 const categoriasController = require("./controller/categoriasController");
-const verifyJWT = require("../src/middleware/verifyJWT");
+const verifyJWT = require("./middleware/verifyJWT");
+const verifyNullable = require("./middleware/verifyNullable");
 
 
 
@@ -32,7 +33,7 @@ routes.get("/local", verifyJWT.authmid, localController.getLocalPerUser);
 
 routes.post("/local/create", verifyJWT.authmid, localController.createLocal);
 
-routes.put("/local/update/name/:id", verifyJWT.authmid, localController.updatelocalname);
+routes.put("/local/update/name/:id", verifyNullable.verifyNullable, verifyJWT.authmid, localController.updatelocalname);
 
 routes.put("/local/update/status/:id", verifyJWT.authmid, localController.updatelocalstatus);
 

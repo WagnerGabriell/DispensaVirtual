@@ -1,5 +1,4 @@
 const localmodel = require("../model/localModel");
-const { param } = require("../routes");
 
 const getAll = async (req, res)=>{
     const locais = await localmodel.getAll();
@@ -14,13 +13,15 @@ const createLocal = async (req,res) =>{
 
 const updatelocalname = async (req, res) => {
     const { id } = req.params;
-    const uplocal = await localmodel.updatelocalname(req.body, id );
+    const idUser = req.id
+    const uplocal = await localmodel.updatelocalname(req.body, id, idUser);
     return res.status(200).json(uplocal);
 };
 
 const updatelocalstatus = async (req, res) => {
     const { id } = req.params;
-    const uplocal = await localmodel.updatelocalstatus(id);
+    const user_id = req.id;
+    const uplocal = await localmodel.updatelocalstatus(id, user_id);
     return res.status(201).json(uplocal);
 };
 
@@ -34,7 +35,7 @@ const getLocalPerUser = async (req, res) => {
     const id_user = req.id;
     const querylocal = await localmodel.getPerUser(id_user);
     return res.status(200).json(querylocal);
-}
+};
 
 module.exports = {
     getAll,
@@ -43,4 +44,4 @@ module.exports = {
     updatelocalstatus,
     deletelocal,
     getLocalPerUser,
-}
+};
