@@ -1,9 +1,11 @@
 const verifyNullable = (req, res, next) => {
-    const body = req.body.nome;
+    const bodyReqNome = req.body.nome;
 
-    if(body == null || body == "" || body == undefined)
-        return res.status(401).json({message: "Ha campos obrigatorios vazios"});
-    else
+    if(bodyReqNome == "")
+        return res.status(400).json({message: "O campos nome não pode estar vazios"});
+    else if (bodyReqNome == undefined)
+        return res.status(400).json({message: "O campo nome é obrigatorio"});
+    else        
         return next();
 };
 

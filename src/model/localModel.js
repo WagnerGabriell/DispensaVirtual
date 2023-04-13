@@ -1,6 +1,6 @@
 const knex = require("./connection");
 
-const getAll = async() =>{
+const getAll = async() => {
     const local = await knex("local");
     return local
 };
@@ -15,11 +15,10 @@ const updatelocalname = async (local, idlocal, idUser) =>{
     const {nome} = local;
     const uplocal = await knex("local").where({id: idlocal});
 
-    if( uplocal[0] == idUser){
+    if( uplocal[0] == idUser)
         return await knex("local").where({id:idlocal}).update({nome:nome});
-    }else{
+    else
         return [{message: "erro!! voce nào pode alterar o local de outro usuario"}];
-    }
 };
 
 const updatelocalstatus = async (idlocal, idUser) => {
