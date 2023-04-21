@@ -15,7 +15,7 @@ const updatelocalname = async (local, idlocal, idUser) =>{
     const {nome} = local;
     const uplocal = await knex("local").where({id: idlocal});
 
-    if( uplocal[0] == idUser)
+    if( uplocal[0].user_id == idUser)
         return await knex("local").where({id:idlocal}).update({nome:nome});
     else
         return [{message: "erro!! voce nào pode alterar o local de outro usuario"}];
