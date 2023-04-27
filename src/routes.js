@@ -1,10 +1,13 @@
 const express = require("express");
+
 const usersController = require("./controller/userController");
 const loginController = require("./controller/loginController");
 const localController = require("./controller/localController");
 const categoriasController = require("./controller/categoriasController");
+const produtosController = require("../src/controller/produtosController");
 const verifyJWT = require("./middleware/verifyJWT");
 const verifyNullable = require("./middleware/verifyNullable");
+
 
 
 
@@ -50,5 +53,11 @@ routes.post("/categorias/create", verifyJWT.authmid, categoriasController.create
 routes.put("/categorias/update/name/:id", verifyJWT.authmid, categoriasController.updateCategoriasName);
 
 routes.delete("/categorias/delete/:id", verifyJWT.authmid, categoriasController.deleteCategoria);
+
+//Rotas Produto
+routes.get("/produtos", produtosController.getall);
+routes.post("/produtos/create",verifyJWT.authmid ,produtosController.createProduto);
+routes.delete("/produtos/delete/:id", produtosController.deleteProduto);
+
 
 module.exports = routes;

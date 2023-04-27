@@ -5,8 +5,8 @@ const getAll = async () =>{
      return users;
 };
 const createUser = async (user) =>{
-    const { email, senha, telefone} = user;
-    const newUser = await knex("users").insert({email:email,senha:senha,telefone:telefone});
+    const { email, senha} = user;
+    const newUser = await knex("users").insert({email:email,senha:senha});
     return newUser;
 };
 const deleteUser = async (user) =>{
