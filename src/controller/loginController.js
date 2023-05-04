@@ -11,9 +11,15 @@ const registerUser = async(req,res) => {
     if(query.length > 0){
         return res.status(400).json({message:"Usuario Existente"});
     }else if(query.length == 0){
+
+        if(req.body.email != req.body.confirmeEmail)
+            return res.status(400).json({message: "O email de confirmação é diferente do primeiro email informado"});
+        else if(req.body.senha != req.body.confirmeSenha)
+            return res.status(400).json({message: "A senha de confirmação é diferente da primeira senha informado"});
+
         const newUser = await userModel.createUser(req.body);  
-        query[0].senha = undefined; 
         return res.status(201).json({message:"User Created", token:generateToken(newUser[0].id)});
+    
     }
 };
 
