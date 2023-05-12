@@ -24,6 +24,7 @@ const findEmail = async (user) => {
     return query;
 };
 
+
 module.exports = {
     getAll,
     createUser,

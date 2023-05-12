@@ -1,5 +1,6 @@
 const userModel = require("../model/userModel");
 const jwt = require("jsonwebtoken");
+const sendgrid = require("../services/sendGrid")
 require("dotenv").config();
 
 function generateToken(id){
@@ -33,7 +34,20 @@ const authentication = async(req, res)=>{
     }
 }
 
+const altPassword =  async(req, res) =>{
+    const email = req.body;
+    const query = await userModel.findEmail(email);
+
+    if(query.length < 1)
+        return res.status(400).json({message:"Not found"});
+    else{
+        await sendgrid.sendGridApi(query[0].email);
+        return res.status(200).json({message: "email Enviado"});
+    }
+};
+
 module.exports = {
     authentication,
     registerUser,
+    altPassword,
 }

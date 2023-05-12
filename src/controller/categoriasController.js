@@ -12,14 +12,23 @@ const createCategorias = async (req, res) => {
 };
 
 const getCategoriasPerUser = async (req, res) => {
-    const categorias = await categoriasModel.getCategoriasPerUser(req.id);
-    return res.status(200).json(categorias);
+    const { id } = req.params;
+
+    if(req.id == id){
+        const categorias = await categoriasModel.getCategoriasPerUser(id);
+        return res.status(200).json(categorias);
+    }else
+        return res.status(400).json({message: "Acesso negado"});
 };
 
 const updateCategoriasName = async (req, res) => {
     const { id } = req.params;
-    const upCategoria = await categoriasModel.updateCategoriasName(req.body, id);
-    return res.status(200).json(upCategoria);
+    
+    if(req.id == id){
+        const upCategoria = await categoriasModel.updateCategoriasName(req.body, id);
+        return res.status(200).json(upCategoria);
+    }else
+        return res.status(400).json({message: "Acesso negado"});
 };
 
 const deleteCategoria = async (req, res) => {

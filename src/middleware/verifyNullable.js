@@ -86,10 +86,24 @@ const LocalECategoria = (req, res, next) =>{
     next()
 }
 
+const AlterarPassword = (req,res,next) => {
+
+    const {body} = req;
+
+    if(body.email == "")
+        return res.status(400).json({ message: "O campo email não pode estar vazio"})
+
+    if(body.email == undefined)
+        return res.status(400).json({ message: "O campo email é obrigatorio"});
+
+    next();
+}
+
 module.exports = {
     UpdateLocalECategoria,
     Produtos,
     Login,
     Register,
     LocalECategoria,
+    AlterarPassword,
 }

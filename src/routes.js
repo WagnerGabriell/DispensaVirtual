@@ -5,6 +5,7 @@ const loginController = require("./controller/loginController");
 const localController = require("./controller/localController");
 const categoriasController = require("./controller/categoriasController");
 const produtosController = require("../src/controller/produtosController");
+const listaComprasController = require("./controller/listaComprasController");
 const verifyJWT = require("./middleware/verifyJWT");
 const verifyNullable = require("./middleware/verifyNullable");
 
@@ -17,17 +18,19 @@ routes.get("/users", usersController.getAll);
 
 routes.delete("/users/delete/:id",usersController.deleteUser);
 
-//Rotas Registro e login
+//Rotas Registro ,login e alterar senha
 routes.get("/login", verifyNullable.Login, loginController.authentication);
 
 routes.post("/register", verifyNullable.Register, loginController.registerUser);
+
+routes.post("/alterar/senha", verifyNullable.AlterarPassword, loginController.altPassword);
 
 
 //Rotas local
 
 // routes.get("/local",localController.getAll);
 
-routes.get("/local", verifyJWT.authmid, localController.getLocalPerUser);
+routes.get("/local/:id", verifyJWT.authmid, localController.getLocalPerUser);
 
 routes.post("/local/create", verifyJWT.authmid, verifyNullable.LocalECategoria, localController.createLocal);
 
@@ -41,7 +44,7 @@ routes.delete("/local/delete/:id", verifyJWT.authmid, localController.deleteloca
 
 // routes.get("/categorias", categoriasController.getAllCategorias);
 
-routes.get("/categorias", verifyJWT.authmid, categoriasController.getCategoriasPerUser);
+routes.get("/categorias/:id", verifyJWT.authmid, categoriasController.getCategoriasPerUser);
 
 routes.post("/categorias/create", verifyJWT.authmid, verifyNullable.LocalECategoria, categoriasController.createCategorias);
 
@@ -55,6 +58,11 @@ routes.get("/produtos", produtosController.getall);
 routes.post("/produtos/create",verifyJWT.authmid, verifyNullable.Produtos ,produtosController.createProduto);
 
 routes.delete("/produtos/delete/:id", produtosController.deleteProduto);
+
+//Rptas ListaCompras
+
+routes.get("/listaCompras/:id", verifyJWT.authmid,listaComprasController.getPerUser);
+routes.post("/listaCompras/create", verifyJWT.authmid,listaComprasController.createItem);
 
 
 module.exports = routes;

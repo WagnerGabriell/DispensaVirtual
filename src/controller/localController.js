@@ -32,9 +32,12 @@ const deletelocal = async (req,res) =>{
 };
 
 const getLocalPerUser = async (req, res) => {
-    const id_user = req.id;
-    const querylocal = await localmodel.getPerUser(id_user);
-    return res.status(200).json(querylocal);
+    const {id} = req.params;
+    if(req.id == id){
+        const querylocal = await localmodel.getPerUser(id);
+        return res.status(200).json(querylocal);
+    }else
+        return res.status(400).json({message:"Acesso negado"});
 };
 
 module.exports = {
