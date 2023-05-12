@@ -7,7 +7,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const sendGridApi = (email) => {
   const msg = {
     to: email,
-    from: "wagnergoliveira@hotmail.com", // Use the email address or domain you verified above
+    from: process.env.EMAIL_FROM, // Use the email address or domain you verified above
     subject: 'Despensa Virtual',
     text: 'Altere a Senha',
     html: '<strong>Altere a Senha</strong>',
