@@ -62,7 +62,7 @@ routes.delete("/produtos/delete/:id", produtosController.deleteProduto);
 //Rptas ListaCompras
 
 routes.get("/listaCompras/:id", verifyJWT.authmid,listaComprasController.getPerUser);
-routes.post("/listaCompras/create", verifyJWT.authmid,listaComprasController.createItem);
+routes.post("/listaCompras/create", verifyJWT.authmid, verifyNullable.AddListaCompras,listaComprasController.createItem);
 
 
 module.exports = routes;

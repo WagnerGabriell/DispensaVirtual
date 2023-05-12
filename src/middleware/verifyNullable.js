@@ -99,6 +99,21 @@ const AlterarPassword = (req,res,next) => {
     next();
 }
 
+const AddListaCompras = (req, res, next) =>{
+    const {body} = req;
+    if(body.nome == "")
+        return res.status(400).json({message: "O campo nome não pode estar vazio"});
+    else if(body.quantidade == "")
+        return res.status(400).json({message: "O campo quantidade não pode estar vazio"});
+    
+    if(body.nome == undefined)
+        return res.status(400).json({message: "O campo nome é obrigatorio"});
+    if(body.quantidade == undefined)
+        return res.status(400).json({message: "O campo quantidade é obrigatorio"});
+    
+    next();
+}
+
 module.exports = {
     UpdateLocalECategoria,
     Produtos,
@@ -106,4 +121,5 @@ module.exports = {
     Register,
     LocalECategoria,
     AlterarPassword,
+    AddListaCompras,
 }
