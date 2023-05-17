@@ -1,6 +1,7 @@
 const userModel = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 const sendgrid = require("../services/sendGrid")
+const crypto = require("crypto");
 require("dotenv").config();
 
 function generateToken(id){
@@ -34,20 +35,42 @@ const authentication = async(req, res)=>{
     }
 }
 
-const altPassword =  async(req, res) =>{
+const envioToken =  async(req, res) => {
     const email = req.body;
     const query = await userModel.findEmail(email);
 
     if(query.length < 1)
         return res.status(400).json({message:"Not found"});
     else{
-        await sendgrid.sendGridApi(query[0].email);
+        const token = crypto.randomBytes(20).toString("hex")
+        const now = new Date();
+        now.setHours(now.getHours() + 1);
+
+        await userModel.insertToken(query[0], token, now);
+        const newQuery = await userModel.findEmail(email);
+        
+        await sendgrid.sendGridApi(newQuery[0].email, newQuery[0].token);
         return res.status(200).json({message: "email Enviado"});
     }
 };
 
+const altPassword = async (req,res) =>{
+    const {token} = req.params;
+    const {novaSenha} = req.body;
+
+    try{
+        await userModel.updatePassword(novaSenha,token);
+        const userToken = await userModel.serchUserPerToken(token);
+        await userModel.insertToken(userToken[0], null, null);
+        return res.status(200).json({message: "Senha Alterada!"});
+    }catch(error){
+        return res.status(400).json({message: error});
+    }
+}
+
 module.exports = {
     authentication,
     registerUser,
+    envioToken,
     altPassword,
 }

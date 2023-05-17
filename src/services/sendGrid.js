@@ -4,13 +4,12 @@ require("dotenv").config();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const sendGridApi = (email) => {
+const sendGridApi = (email, token) => {
   const msg = {
     to: email,
     from: process.env.EMAIL_FROM, // Use the email address or domain you verified above
     subject: 'Despensa Virtual',
-    text: 'Altere a Senha',
-    html: '<strong>Altere a Senha</strong>',
+    text: `Altere  sua senha acessando este link http://localhost:3000/alterar/senha/${token}`
   };
 
   (async () => {

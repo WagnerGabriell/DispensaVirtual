@@ -1,7 +1,7 @@
 const knex = require("./connection");
 
-const getAll = async () =>{
-    const produtos = await knex("produtos");
+const getAll = async (idUser) =>{
+    const produtos = await knex("produtos").select("id", "nome" ,"quantidade","dataDeValidade","user_id","img","local_id", "categoria_id").where({user_id:idUser});
     return produtos;
 }
 
@@ -16,8 +16,26 @@ const deleteProduto = async (produto) =>{
     return await knex("produtos").where({id:id}).del();
 };
 
+const getProdutosPerCategoria = async (categoria) =>{
+    const item = await knex("produtos").select("id", "nome" ,"quantidade","dataDeValidade","user_id","img","local_id", "categoria_id").where({categoria_id:categoria});
+    return item;
+};
+
+const getProdutosPerLocal = async (local) =>{
+    const item = await knex("produtos").select("id", "nome" ,"quantidade","dataDeValidade","user_id","img","local_id", "categoria_id").where({local_id:local});
+    return item;
+};
+
+const getProdutosPerId = async (idproduto) =>{
+    const item = await knex("produtos").select().where({id: idproduto});
+    return item;
+}
+
 module.exports = {
     getAll,
     newProduto,
     deleteProduto,
+    getProdutosPerCategoria,
+    getProdutosPerLocal,
+    getProdutosPerId,
 }

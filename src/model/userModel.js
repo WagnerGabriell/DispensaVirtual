@@ -23,7 +23,25 @@ const findEmail = async (user) => {
     const query = await knex("users").select().where({email:email});
     return query;
 };
+const insertToken = async (user, token, date)=>{
+    const {id} = user;
+    const insert = await knex("users").where({id:id}).update({token:token, expiresToken:date});
+    return insert;
+}
+const serchUserPerToken = async (token) =>{
+    const query = await knex("users").select().where({token:token});
+    return query;
+}
 
+const updatePassword = async (newPassword, token) => {
+    const updateuser = await knex("users").update({senha: newPassword}).where({token:token});
+    return updateuser;
+};
+
+const getcategoria = async (user) =>{
+    const itens = await knex("users").select("categorias.id", "categorias.nome", "categorias.img").innerJoin("categorias","users.id", "categorias.user_id").where({"users.id": user});
+    return itens;
+}
 
 module.exports = {
     getAll,
@@ -31,4 +49,8 @@ module.exports = {
     deleteUser,
     findUser,
     findEmail,
+    insertToken,
+    serchUserPerToken,
+    updatePassword,
+    getcategoria,
 };

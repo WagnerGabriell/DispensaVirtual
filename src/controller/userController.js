@@ -1,3 +1,4 @@
+const { query } = require("express");
 const userModel = require("../model/userModel");
 const { param } = require("../routes");
 
@@ -15,8 +16,22 @@ const deleteUser = async (req,res) => {
     return res.status(204).json();
 };
 
+const getcategoriaPerUser = async (req, res) => {
+    const {id} = req.params;
+
+    try{
+        const query = await userModel.getcategoria(id);
+        return res.status(200).json(query);
+    }catch(erro){
+        return res.status(400).json({message:erro});
+    }
+};
+
+
+
 module.exports = {
     getAll,
     createUser,
     deleteUser,
+    getcategoriaPerUser,
 };

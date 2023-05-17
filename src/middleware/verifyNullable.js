@@ -3,10 +3,10 @@ const UpdateLocalECategoria = (req, res, next) => {
 
     if(bodyReqNome == "")
         return res.status(400).json({message: "O campo nome não pode estar vazio"});
-    else if (bodyReqNome == undefined)
+    if (bodyReqNome == undefined)
         return res.status(400).json({message: "O campo nome é obrigatorio"});
-    else        
-        return next();
+           
+    return next();
 };
 
 const Produtos = (req, res, next) => {
@@ -14,16 +14,16 @@ const Produtos = (req, res, next) => {
 
     if(body.nome == "")
         return res.status(400).json({message: "O campo nome não pode esta vazio"});
-    else if (body.quantidade == "")
+    if (body.quantidade == "")
         return res.status(400).json({message: "O campo quantidade não pode esta vazio"});
-    else if (body.img == "")
+    if (body.img == "")
         return res.status(400).json({message: "O campo imagem não pode esta vazio"});
     
     if(body.nome == undefined)
         return res.status(400).json({message: "O campo nome é obrigatorio"});
-    else if (body.quantidade == undefined)
+    if (body.quantidade == undefined)
         return res.status(400).json({message: "O campo quantidade é obrigatorio"});
-    else if (body.img == undefined)
+    if (body.img == undefined)
         return res.status(400).json({message: "O campo imagem é obrigatorio"});  
     
     next()
@@ -34,12 +34,12 @@ const Login = (req, res, next) => {
 
     if(body.email == "")
         return res.status(400).json({message: "O campo email não pode estar vazio"});
-    else if(body.senha == "")
+    if(body.senha == "")
         return res.status(400).json({message: "O campo senha não pode estar vazio"});
     
     if(body.email == undefined)
         return res.status(400).json({message: "O campo email é um campo obrigatorio"});
-    else if(body.senha == undefined)
+    if(body.senha == undefined)
         return res.status(400).json({message: "O campo senha é um campo obrigatorio"});
         
     next();
@@ -50,21 +50,21 @@ const Register = (req, res, next) => {
 
     if(body.email == "")
         return res.status(400).json({message: "O campo email não pode estar vazio"});
-    else if(body.senha == "")
+    if(body.senha == "")
         return res.status(400).json({message: "O campo senha não pode estar vazio"});
-    else if(body.confirmeEmail == "")
+    if(body.confirmeEmail == "")
         return res.status(400).json({message: "O campo confirmar email não pode estar vazio"});
-    else if(body.confirmeSenha == ""){
+    if(body.confirmeSenha == ""){
         return res.status(400).json({message: "O campo confirmar senha não pode estar vazio"});
     }
     
     if(body.email == undefined)
         return res.status(400).json({message: "O campo email é um campo obrigatorio"});
-    else if(body.senha == undefined)
+    if(body.senha == undefined)
         return res.status(400).json({message: "O campo senha é um campo obrigatorio"});
-    else if(body.confirmeEmail == undefined)
+    if(body.confirmeEmail == undefined)
         return res.status(400).json({message: "O campo confirmar email é um campo obrigatorio"});
-    else if(body.confirmeSenha == undefined){
+    if(body.confirmeSenha == undefined){
         return res.status(400).json({message: "O campo confirmar senha é um campo obrigatorio"});
     }    
     next();
@@ -75,18 +75,18 @@ const LocalECategoria = (req, res, next) =>{
 
     if(body.nome == "")
         return res.status(400).json({message: "O campo nome não pode estar vazio"});
-    else if(body.img == "")
+    if(body.img == "")
         return res.status(400).json({message: "O campo de imagem não pode estar vazio"});
 
     if(body.nome == undefined)
         return res.status(400).json({message: "O campo nome é obrigatorio"});
-    else if(body.img == undefined)
+    if(body.img == undefined)
         return res.status(400).json({message: "O campo de imagem é obrigatorio"});
 
     next()
 }
 
-const AlterarPassword = (req,res,next) => {
+const envioToken = (req,res,next) => {
 
     const {body} = req;
 
@@ -103,7 +103,7 @@ const AddListaCompras = (req, res, next) =>{
     const {body} = req;
     if(body.nome == "")
         return res.status(400).json({message: "O campo nome não pode estar vazio"});
-    else if(body.quantidade == "")
+    if(body.quantidade == "")
         return res.status(400).json({message: "O campo quantidade não pode estar vazio"});
     
     if(body.nome == undefined)
@@ -111,6 +111,11 @@ const AddListaCompras = (req, res, next) =>{
     if(body.quantidade == undefined)
         return res.status(400).json({message: "O campo quantidade é obrigatorio"});
     
+    if(body.img =="")
+        return res.status(400).json({message:"O campo img é obrigatorio"});
+    if(body.img ==undefined)
+        return res.status(400).json({message:"O campo img é obrigatorio"});
+        
     next();
 }
 
@@ -120,6 +125,6 @@ module.exports = {
     Login,
     Register,
     LocalECategoria,
-    AlterarPassword,
+    envioToken,
     AddListaCompras,
 }
