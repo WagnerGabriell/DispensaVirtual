@@ -1,18 +1,19 @@
 const produtosModel = require("../model/produtosModel");
 
-const getall = async (req,res) => {
+const getAllAndDespensa = async (req,res) => {
     const {idUser} = req.params;
     try{
-        const query = await produtosModel.getAll(idUser);
+        const query = await produtosModel.getAllAndDespensa(idUser);
         if(query[0].user_id == req.id)
         return res.status(200).json(query);
     }catch(error){
-        return res.status(400).json({message:error});
+        return res.status(400).json();
     }
 };
 
 const createProduto = async(req,res) => {
-    const newProduto = await produtosModel.newProduto(req.body, req.id);
+    const {id} = req.params;
+    const newProduto = await produtosModel.newProduto(req.body, id);
     return res.status(201).json(newProduto);
 }
 
@@ -54,11 +55,28 @@ const getProdutosPerId = async (req,res) => {
     }
 }
 
+const updateProduto = async(req,res) => {
+    const {id} = req.params;
+    const produto = req.body;
+    try{
+        const query = await produtosModel.getProdutosPerId(id);
+        if(query[0].user_id == req.id){
+            await produtosModel.updateProduto(id,produto);
+            return res.status(200).json();
+        }
+    }
+    catch(error){
+        return res.status(400).json({message:error});
+    }
+    
+}
+
 module.exports = {
-    getall,
+    getAllAndDespensa,
     createProduto,
     deleteProduto,
     getProdutosPerCategoria,
     getProdutosPerLocal,
     getProdutosPerId,
+    updateProduto,
 }

@@ -12,19 +12,23 @@ const createCategorias = async (categoria, id_user) => {
 };
 
 const getCategoriasPerUser = async (id_user) => {
-    const categorias = await knex("categorias").where({user_id: id_user});
+    const categorias = await knex("categorias").select("id","nome","img","user_id").where({user_id: id_user});
     return categorias;
 };
 
 const updateCategoriasName = async (categoria, id_categorias) => {
-    const {nome} = categoria;
-    const upCategoria = await knex("categorias").where({id:id_categorias}).update({nome:nome});
+    const {nome, img} = categoria;
+    const upCategoria = await knex("categorias").where({id:id_categorias}).update({nome:nome, img:img});
     return upCategoria;
 };
 const deleteCategoria = async (categoria) =>{
     const delCategoria = await knex("categorias").where({id:categoria}).del();
     return delCategoria;
 }; 
+const getCategoriaPerId = async (idCategoria) => {
+    const item = await knex("categorias").select().where({id:idCategoria});
+    return item;
+};
 
 module.exports = {
     getAllCategorias,
@@ -32,4 +36,5 @@ module.exports = {
     getCategoriasPerUser,
     updateCategoriasName,
     deleteCategoria,
+    getCategoriaPerId,
 }

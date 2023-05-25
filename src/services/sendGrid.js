@@ -9,7 +9,7 @@ const sendGridApi = (email, token) => {
     to: email,
     from: process.env.EMAIL_FROM, // Use the email address or domain you verified above
     subject: 'Despensa Virtual',
-    text: `Altere  sua senha acessando este link http://localhost:3000/alterar/senha/${token}`
+    text: `Altere  sua senha acessando este link http://localhost:3001/alterar-senha/${token}`
   };
 
   (async () => {

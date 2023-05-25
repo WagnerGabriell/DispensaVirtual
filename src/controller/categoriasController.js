@@ -7,7 +7,8 @@ const getAllCategorias = async (req, res) => {
 };
 
 const createCategorias = async (req, res) => {
-    const newcategoria = await categoriasModel.createCategorias(req.body, req.id);
+    const {id} = req.params;
+    const newcategoria = await categoriasModel.createCategorias(req.body, id);
     return res.status(201).json(newcategoria);
 };
 
@@ -23,8 +24,8 @@ const getCategoriasPerUser = async (req, res) => {
 
 const updateCategoriasName = async (req, res) => {
     const { id } = req.params;
-    
-    if(req.id == id){
+    const categorias = await categoriasModel.getCategoriaPerId(id);
+    if(req.id == categorias[0].user_id){
         const upCategoria = await categoriasModel.updateCategoriasName(req.body, id);
         return res.status(200).json(upCategoria);
     }else
@@ -37,10 +38,21 @@ const deleteCategoria = async (req, res) => {
     return res.status(200).json();
 };
 
+const getCategoriaPerId = async (req,res) =>{
+    const {idCategoria} = req.params;
+    try{
+        const item = await categoriasModel.getCategoriaPerId(idCategoria);
+        return res.status(200).json(item);
+    }catch(error){
+        console.log(error);
+    }
+};
+
 module.exports = {
     getAllCategorias,
     createCategorias,
     getCategoriasPerUser,
     updateCategoriasName,
     deleteCategoria,
+    getCategoriaPerId,
 }

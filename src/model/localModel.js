@@ -12,11 +12,11 @@ const newLocal = async (local, userid) =>{
 };
 
 const updatelocalname = async (local, idlocal, idUser) =>{
-    const {nome} = local;
+    const {nome, img} = local;
     const uplocal = await knex("local").where({id: idlocal});
 
     if( uplocal[0].user_id == idUser)
-        return await knex("local").where({id:idlocal}).update({nome:nome});
+        return await knex("local").where({id:idlocal}).update({nome:nome,img:img});
     else
         return [{message: "erro!! voce nào pode alterar o local de outro usuario"}];
 };
@@ -49,6 +49,10 @@ const getPerUser = async (userid) => {
     const locais = await knex("local").select().where({user_id: userId});
     return locais;
 };
+const getPerId = async (idlocal)=>{
+    const item = await knex("local").select().where({id:idlocal});
+    return item
+};
 
 module.exports = {
     getAll,
@@ -57,5 +61,6 @@ module.exports = {
     updatelocalname,
     updatelocalstatus,
     getPerUser,
+    getPerId,
 }
 

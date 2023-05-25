@@ -20,7 +20,8 @@ const registerUser = async(req,res) => {
             return res.status(400).json({message: "A senha de confirmação é diferente da primeira senha informado"});
 
         const newUser = await userModel.createUser(req.body);  
-        return res.status(201).json({message:"User Created", token:generateToken(newUser[0].id)});
+        const user = await userModel.findEmail(req.body);
+        return res.status(201).json({message:"User Created", query: user[0].id, token:generateToken(newUser[0].id)});
     
     }
 };

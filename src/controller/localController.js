@@ -6,9 +6,14 @@ const getAll = async (req, res)=>{
 };
 
 const createLocal = async (req,res) =>{
-    const id_user = req.id;
-    const newlocal = await localmodel.newLocal(req.body, id_user);
-    return res.status(201).json(newlocal);
+    const {id} = req.params;
+    const userid = req.id;
+    if(userid == id){
+        const newlocal = await localmodel.newLocal(req.body, id);
+        return res.status(201).json(newlocal);
+    }else{
+        return res.status(400).json();
+    }
 };
 
 const updatelocalname = async (req, res) => {
@@ -27,17 +32,29 @@ const updatelocalstatus = async (req, res) => {
 
 const deletelocal = async (req,res) =>{
     const { id } = req.params;
-    await localmodel.deletelocal(id);
+    const userid = req.id
+    await localmodel.deletelocal(id,userid);
     return res.status(204).json();
 };
 
 const getLocalPerUser = async (req, res) => {
     const {id} = req.params;
-    if(req.id == id){
-        const querylocal = await localmodel.getPerUser(id);
-        return res.status(200).json(querylocal);
-    }else
-        return res.status(400).json({message:"Acesso negado"});
+        try{
+            const querylocal = await localmodel.getPerUser(id);
+            return res.status(200).json(querylocal);
+        }catch(error){
+            return res.status(400).json();
+    }
+};
+const getPerId = async (req, res)=>{
+    const {idlocal} = req.params;
+    try{
+        const query = await localmodel.getPerId(idlocal);
+        if(query[0].user_id == req.id)
+            return res.status(200).json(query);
+    }catch(error){
+        return res.status(400).json({message:error});
+    }
 };
 
 module.exports = {
@@ -47,4 +64,5 @@ module.exports = {
     updatelocalstatus,
     deletelocal,
     getLocalPerUser,
+    getPerId,
 };
