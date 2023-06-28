@@ -41,9 +41,13 @@ const getLocalPerUser = async (req, res) => {
     const {id} = req.params;
         try{
             const querylocal = await localmodel.getPerUser(id);
+            if(querylocal.length == 0)
+                throw "Nenhuma despensa encontrada";
+            if(querylocal[0].user_id != req.id)
+                throw "Sem Autorização";
             return res.status(200).json(querylocal);
         }catch(error){
-            return res.status(400).json();
+            return res.status(400).json([{message: `${error}`}]);
     }
 };
 const getPerId = async (req, res)=>{
@@ -57,6 +61,22 @@ const getPerId = async (req, res)=>{
     }
 };
 
+const getLocalOn = async (req, res)=>{
+  const {id} = req.params;
+  const tokenid = req.id
+  try{
+    const query = await localmodel.getLocalOn(id);
+    if(query.length == 0){
+        throw "Nenhuma Despensa Encontrada";
+    }
+    if(query[0].user_id == tokenid){
+        return res.status(200).json(query);
+    }
+    
+  }catch(error){
+        return res.status(400).json([{message: `${error}`}]);
+    }
+};
 module.exports = {
     getAll,
     createLocal,
@@ -65,4 +85,5 @@ module.exports = {
     deletelocal,
     getLocalPerUser,
     getPerId,
+    getLocalOn,
 };

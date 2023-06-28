@@ -8,8 +8,6 @@ const produtosController = require("../src/controller/produtosController");
 const listaComprasController = require("./controller/listaComprasController");
 const verifyJWT = require("./middleware/verifyJWT");
 const verifyNullable = require("./middleware/verifyNullable");
-
-
 const routes = express.Router();
 routes.use(cors());
 
@@ -52,6 +50,8 @@ routes.delete("/local/delete/:id", verifyJWT.authmid, localController.deleteloca
 
 routes.get("/local/describe/:idlocal", verifyJWT.authmid,localController.getPerId);
 
+routes.get("/local/despensaOn/:id", verifyJWT.authmid, localController.getLocalOn);
+
 //Rotas categorias
 
 //Pega todas as categorias de um determinado usuario
@@ -92,6 +92,10 @@ routes.put("/produtos/update/:id", verifyJWT.authmid, produtosController.updateP
 //Deleta um produto X
 routes.delete("/produtos/delete/:id", produtosController.deleteProduto);
 
+routes.get("/produtos/vencidos/:id", verifyJWT.authmid, produtosController.ProdutosVencidos)
+
+routes.get("/produtos/Avencer/:id", verifyJWT.authmid, produtosController.ProdutosAVencer)
+
 //Rptas ListaCompras
 
 //Pega todos os produtos a comprar de um determinado usuario
@@ -100,7 +104,11 @@ routes.get("/listaCompras/:id", verifyJWT.authmid,listaComprasController.getPerU
 // Cadastra um novo item na tabela de lista de compras
 routes.post("/listaCompras/create/:id", verifyJWT.authmid, verifyNullable.AddListaCompras,listaComprasController.createItem);
 
+//Deletar um item na lista de compras
 routes.delete("/listaCompras/delete/:id", verifyJWT.authmid, listaComprasController.DeleteItem);
+
+//Item Comprado
+routes.get("/listaCompras/itemComprado/:id", verifyJWT.authmid,listaComprasController.ItemComprado);
 
 
 module.exports = routes;

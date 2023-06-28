@@ -48,10 +48,15 @@ const getProdutosPerId = async (req,res) => {
     const {idProduto} = req.params;
     try{
         const query = await produtosModel.getProdutosPerId(idProduto);
+        if(query.length < 1)
+            throw "Nenhum Produto Encontrado";
         if(query[0].user_id == req.id)
             return res.status(200).json(query);
+        else
+            throw "Você não possui acesso";
+
     }catch(error){
-        return res.status(400).json({message:error});
+        return res.status(400).json([{message:`${error}`}]);
     }
 }
 
@@ -63,12 +68,38 @@ const updateProduto = async(req,res) => {
         if(query[0].user_id == req.id){
             await produtosModel.updateProduto(id,produto);
             return res.status(200).json();
-        }
+        }else
+            throw "Você não possui acesso";
     }
     catch(error){
-        return res.status(400).json({message:error});
+        return res.status(400).json([{message:`${error}`}]);
+    }   
+}
+
+const ProdutosVencidos = async (req,res) =>{
+    const {id} = req.params;
+    try{
+        const query = await produtosModel.ProdutosVencidos(id);
+        if(query[0].user_id == id)
+            return res.status(200).json(query);
+        throw "Você não possui acesso";
+    }catch(error){
+        return res.status(400).json([{message:`${error}`}]);
     }
-    
+};
+
+const ProdutosAVencer = async (req,res) =>{
+    const {id} = req.params;
+    try{
+        const query = await produtosModel.ProdutosAVencer(id);
+        if(query.length < 1)
+            throw "Nenhum Produto Esta Proximo de Vencer";
+        if(query[0].user_id == id)
+            return res.status(200).json(query);
+        throw "Voce não possui acesso";
+    }catch(error){
+        return res.status(400).json([{message:`${error}`}]);
+    }
 }
 
 module.exports = {
@@ -79,4 +110,6 @@ module.exports = {
     getProdutosPerLocal,
     getProdutosPerId,
     updateProduto,
+    ProdutosVencidos,
+    ProdutosAVencer
 }

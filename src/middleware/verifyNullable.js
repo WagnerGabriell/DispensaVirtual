@@ -16,14 +16,14 @@ const Produtos = (req, res, next) => {
         return res.status(400).json({message: "O campo nome não pode esta vazio"});
     if (body.quantidade == "")
         return res.status(400).json({message: "O campo quantidade não pode esta vazio"});
-    if (body.img == "")
+    if (body.ImgProduto == "")
         return res.status(400).json({message: "O campo imagem não pode esta vazio"});
     
     if(body.nome == undefined)
         return res.status(400).json({message: "O campo nome é obrigatorio"});
     if (body.quantidade == undefined)
         return res.status(400).json({message: "O campo quantidade é obrigatorio"});
-    if (body.img == undefined)
+    if (body.ImgProduto == undefined)
         return res.status(400).json({message: "O campo imagem é obrigatorio"});  
     
     next()
@@ -35,7 +35,7 @@ const Login = (req, res, next) => {
     if(body.email == "")
         return res.status(400).json({message: "O campo email não pode estar vazio"});
     if(body.senha == "")
-        return res.status(400).json({message: "O campo senha não pode estar vazio"});
+        return res.status(400).json([{message: "O campo senha não pode estar vazio"}]);
     
     if(body.email == undefined)
         return res.status(400).json({message: "O campo email é um campo obrigatorio"});

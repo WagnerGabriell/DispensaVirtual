@@ -54,6 +54,11 @@ const getPerId = async (idlocal)=>{
     return item
 };
 
+const getLocalOn = async (userid)=>{
+    const item = await knex("local").select().where({status:true, user_id:userid});
+    return item;
+};
+
 module.exports = {
     getAll,
     newLocal,
@@ -62,5 +67,6 @@ module.exports = {
     updatelocalstatus,
     getPerUser,
     getPerId,
+    getLocalOn,
 }
 
